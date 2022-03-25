@@ -3,6 +3,7 @@
 #ifdef _WIN32
 #define _FILE_DEFINED
 #endif
+#include <utility>
 #include <memory>
 #include <cstdint>
 #include <string_view>

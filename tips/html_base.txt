@@ -8,8 +8,17 @@
 <body>
     <script type="module">
 
-        let wa = (await WebAssembly.instantiateStreaming(fetch('XXXXXXXXXXXXX.wasm'))).instance.exports;
-        wa.XXXXXXXXXXXXX(........)
+        const wa = (await WebAssembly.instantiateStreaming(fetch('????????.wasm'))).instance.exports;
+
+
+        const u8a = Uint8Array.from(window.atob(
+            '???????? .wasm to base 64 string here ????????'
+        ), (v) => v.charCodeAt(0));
+        const wa new WebAssembly.Instance(new WebAssembly.Module(u8a), {}).exports;
+
+
+        let rtv = wa. func name ( args )
+
 
     </script>
 </body>
