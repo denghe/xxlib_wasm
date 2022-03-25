@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script type="module">
+
+        const td = new TextDecoder();
+        const te = new TextEncoder();
+
+        let memRoot = null;
+        let clib = null;
+        let clob = null;
+
+        const n2s = (n) => {
+            let a = te.encode(n.toString());
+            clib.set(a, 0, a.byteLength);
+            return a.byteLength;
+        };
+
+        const imo = {
+            env: {
+                DblToStr: n2s,
+                I64ToStr: n2s,
+                U64ToStr: (n) => {
+                    return n2s(BigInt.asUintN(64, n));
+                },
+                CLStr: (len) => {
+                    console.log(td.decode(clob.slice(0, len)));
+                },
+                DateNow: function() {
+                    return Date.now();
+                },
+            },
+        };
+
+        const wa = (await WebAssembly.instantiateStreaming(fetch('main.wasm'), imo)).instance.exports;
+
+        memRoot = wa.memory.buffer;
+        clib = new Uint8Array(memRoot, wa.GetCLIB(), 32);
+        clob = new Uint8Array(memRoot, wa.GetCLOB(), 16384);
+
+        wa.TestConsoleLog();
+
+    </script>
+</body>
+</html>

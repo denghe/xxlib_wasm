@@ -1,0 +1,11 @@
+1. git push https://github.com/emscripten-core/emsdk.git
+2. compile & get emcc.bat em++.bat at ?????????????\emsdk\upstream\emscripten
+3. add this full path to system settings search PATH
+4. create a new cpp console project
+5. mouse right click Project -- Properties
+
+Configuration: All Configurations		Platform: All Platforms
+Configuration Properties:
+	General					Platform Toolset		: LLVM(clang-cl)
+	VC++ Directories			External Inclide Directories	: ?????????????\emsdk\upstream\emscripten\system\include;$(ExternalIncludePath)
+	Build Events -- Post-Build Event	em++ --no-entry -std=c++20 -O2 -s ERROR_ON_UNDEFINED_SYMBOLS=0 -s MALLOC=emmalloc ???????.cpp -o ???????.wasm
